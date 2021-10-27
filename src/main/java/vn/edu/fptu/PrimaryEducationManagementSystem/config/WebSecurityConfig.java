@@ -45,13 +45,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+		return new PasswordEncoder() {
+
+			@Override
+			public boolean matches(CharSequence rawPassword, String encodedPassword) {
+				return rawPassword.toString().equals(encodedPassword);
+			}
+
+			@Override
+			public String encode(CharSequence rawPassword) {
+				return rawPassword.toString();
+			}
+		};
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().cors().and().authorizeRequests().antMatchers("/api/auth/**").permitAll()
-				.antMatchers("/api/test/**").permitAll().anyRequest().authenticated();
+//		http.csrf().disable().cors().and().authorizeRequests().antMatchers("/api/auth/**").permitAll()
+//				.antMatchers("/api/test/**").permitAll().antMatchers("/swagger-ui**").permitAll().antMatchers("/PrimaryEducationManagementSystem/api/v2/**").permitAll().anyRequest().authenticated();
+		
+		http.csrf().disable().cors().and().authorizeRequests().anyRequest().permitAll();
 
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}

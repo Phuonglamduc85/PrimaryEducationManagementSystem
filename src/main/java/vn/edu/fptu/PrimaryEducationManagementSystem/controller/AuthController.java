@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +35,7 @@ import vn.edu.fptu.PrimaryEducationManagementSystem.service.impl.UserDetailsImpl
 
 @RestController
 @RequestMapping("/api/auth")
-public class AuthController1 {
+public class AuthController {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -66,7 +68,7 @@ public class AuthController1 {
 		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), roles));
 	}
 
-	@PostMapping("signup")
+	@PostMapping("/signup")
 	public ResponseEntity<?> registeruser(@Validated @RequestBody SignupRequest signupRequest) {
 
 		if (accountRepository.existsByUsername(signupRequest.getUsername())) {
@@ -93,6 +95,36 @@ public class AuthController1 {
 					roles.add(adminRole);
 
 					break;
+				case "staff":
+					Role staffRole = roleRepository.findByRoleName(ERole.ROLE_STAFF)
+							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					roles.add(staffRole);
+
+					break;
+				case "headmaster":
+					Role headmasterRole = roleRepository.findByRoleName(ERole.ROLE_HEADMASTER)
+							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					roles.add(headmasterRole);
+
+					break;
+				case "teacher":
+					Role teacherRole = roleRepository.findByRoleName(ERole.ROLE_TEACHER)
+							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					roles.add(teacherRole);
+
+					break;
+				case "pupil_parent":
+					Role pupilParentRole = roleRepository.findByRoleName(ERole.ROLE_PUPIL_PARENT)
+							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					roles.add(pupilParentRole);
+
+					break;
+				case "academic_head":
+					Role academicHeadRoles = roleRepository.findByRoleName(ERole.ROLE_PUPIL_PARENT)
+							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					roles.add(academicHeadRoles);
+
+					break;
 				default:
 					Role userRole = roleRepository.findByRoleName(ERole.ROLE_GUEST)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
@@ -106,10 +138,29 @@ public class AuthController1 {
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
-
-	@GetMapping("/all")
-	public String allAccess() {
-		return "Hello World!";
+	
+	@PostMapping("/edit")
+	public ResponseEntity<?> editUser(@Validated @RequestBody Account account) {
+		
+		if (accountRepository.findById(account.getAccId()) == null) {
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Can't not find account");
+		}
+		
+		accountRepository.save(account);
+		return ResponseEntity.ok(new MessageResponse("User edit successfully!"));
 	}
-
+	
+	@PostMapping("/delete")
+	public ResponseEntity<?> deleteUser(@Validated @RequestBody Account account) {
+		
+		if (accountRepository.findById(account.getAccId()) == null) {
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Can't not find account");
+		}
+		
+		accountRepository.delete(account);
+		return ResponseEntity.ok(new MessageResponse("User delete successfully!"));
+	}
+	
 }
