@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import vn.edu.fptu.PrimaryEducationManagementSystem.common.ERole;
@@ -138,29 +139,29 @@ public class AuthController {
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
-	
+
 	@PostMapping("/edit")
 	public ResponseEntity<?> editUser(@Validated @RequestBody Account account) {
-		
+
 		if (accountRepository.findById(account.getAccId()) == null) {
-			
+
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Can't not find account");
 		}
-		
+
 		accountRepository.save(account);
 		return ResponseEntity.ok(new MessageResponse("User edit successfully!"));
 	}
-	
+
 	@PostMapping("/delete")
-	public ResponseEntity<?> deleteUser(@Validated @RequestBody Account account) {
-		
-		if (accountRepository.findById(account.getAccId()) == null) {
-			
+	public ResponseEntity<?> deleteUser(@RequestParam int id) {
+
+		if (accountRepository.findById(id) == null) {
+
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Can't not find account");
 		}
-		
-		accountRepository.delete(account);
+
+		accountRepository.delete(accountRepository.findById(id).get());
 		return ResponseEntity.ok(new MessageResponse("User delete successfully!"));
 	}
-	
+
 }
