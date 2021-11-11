@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.edu.fptu.PrimaryEducationManagementSystem.dto.MessageResponse;
 import vn.edu.fptu.PrimaryEducationManagementSystem.entities.TuitionFee;
 import vn.edu.fptu.PrimaryEducationManagementSystem.repository.TuitionFeeRepository;
+import vn.edu.fptu.PrimaryEducationManagementSystem.service.TuitionFeeService;
 
 @RestController
 @RequestMapping("/api/tuition")
@@ -20,6 +21,15 @@ public class TuitionFeeController {
 
 	@Autowired
 	TuitionFeeRepository tuitionFeeRepo;
+
+	@Autowired
+	TuitionFeeService tuitionFeeService;
+
+	@GetMapping
+	public ResponseEntity<?> findAll() {
+
+		return ResponseEntity.ok(tuitionFeeService.findAllTuitionFee());
+	}
 
 	@PostMapping("/create")
 	public ResponseEntity<?> createTuitionFee(@Validated @RequestBody TuitionFee tuitionFee) {
@@ -56,7 +66,7 @@ public class TuitionFeeController {
 
 		return ResponseEntity.ok(tuitionFeeRepo.findByStaffId(sId));
 	}
-	
+
 	@PostMapping("/delete")
 	public ResponseEntity<?> deleteTuitionFee(@Validated @RequestBody TuitionFee tuitionFee) {
 

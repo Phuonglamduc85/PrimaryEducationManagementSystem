@@ -18,6 +18,13 @@ public interface TuitionFeeRepository extends JpaRepository<TuitionFee, Integer>
 	List<TuitionFee> findByStaffId(int staffId);
 	
 	/**
+	 * Find tuition fee by subject
+	 * @param staffId
+	 * @return List<TuitionFee> 
+	 */
+	TuitionFee findBySubId(int subId);
+	
+	/**
 	 * Find tuition fee by headmaster
 	 * @param mId
 	 * @return List<TuitionFee> 
@@ -30,4 +37,11 @@ public interface TuitionFeeRepository extends JpaRepository<TuitionFee, Integer>
 	 * @return List<TuitionFee> 
 	 */
 	List<TuitionFee> findBypId(int pId);
+	
+	/**
+	 * Find tuition fee by class
+	 * @param pId
+	 * @return List<TuitionFee> 
+	 */
+	List<TuitionFee> findByClassId(int classId);
 }

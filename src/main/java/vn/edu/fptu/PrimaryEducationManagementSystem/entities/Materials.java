@@ -10,7 +10,7 @@ import javax.persistence.Table;
 public class Materials {
 
 	@Id
-	@Column(name = "master_id")
+	@Column(name = "mater_id")
 	private int masterId;
 
 	@Column(name = "teacher_id")
@@ -22,7 +22,7 @@ public class Materials {
 	@Column(name = "class_name")
 	private String className;
 
-	@Column(name = "master_name")
+	@Column(name = "mater_name")
 	private String masterName;
 
 	public Materials() {

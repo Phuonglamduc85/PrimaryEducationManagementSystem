@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,9 +18,6 @@ public class TuitionFee {
 
 	@Column(name = "subid")
 	private int subId;
-
-	@Column(name = "subname")
-	private String subName;
 
 	@Column(name = "price")
 	private BigDecimal price;
@@ -36,21 +34,23 @@ public class TuitionFee {
 	@Column(name = "staffid")
 	private int staffId;
 
+	@Column(name = "classid")
+	private int classId;
+
 	public TuitionFee() {
 		super();
 	}
 
-	public TuitionFee(int tuId, int subId, String subName, BigDecimal price, String date, int mId, int pId,
-			int staffId) {
+	public TuitionFee(int tuId, int subId, BigDecimal price, String date, int mId, int pId, int staffId, int classId) {
 		super();
 		this.tuId = tuId;
 		this.subId = subId;
-		this.subName = subName;
 		this.price = price;
 		this.date = date;
 		this.mId = mId;
 		this.pId = pId;
 		this.staffId = staffId;
+		this.classId = classId;
 	}
 
 	public int getTuId() {
@@ -67,14 +67,6 @@ public class TuitionFee {
 
 	public void setSubId(int subId) {
 		this.subId = subId;
-	}
-
-	public String getSubName() {
-		return subName;
-	}
-
-	public void setSubName(String subName) {
-		this.subName = subName;
 	}
 
 	public BigDecimal getPrice() {
@@ -115,6 +107,14 @@ public class TuitionFee {
 
 	public void setStaffId(int staffId) {
 		this.staffId = staffId;
+	}
+
+	public int getClassId() {
+		return classId;
+	}
+
+	public void setClassId(int classId) {
+		this.classId = classId;
 	}
 
 }

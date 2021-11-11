@@ -14,9 +14,6 @@ import vn.edu.fptu.PrimaryEducationManagementSystem.common.ERole;
 
 @Entity
 @Table(name = "roles")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Role {
 
 	@Id

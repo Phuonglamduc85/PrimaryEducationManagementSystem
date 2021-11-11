@@ -13,9 +13,6 @@ public class Class {
 	@Column(name = "classid")
 	private int classId;
 
-	@Column(name = "pid")
-	private int pId;
-
 	@Column(name = "pname")
 	private String pName;
 
@@ -34,7 +31,7 @@ public class Class {
 	@Column(name = "adid")
 	private int adId;
 
-	@Column(name = "master_id")
+	@Column(name = "mater_id")
 	private int mId;
 
 	@Column(name = "tuid")
@@ -47,11 +44,10 @@ public class Class {
 		super();
 	}
 
-	public Class(int classId, int pId, String pName, String className, String dateFrom, String dateTo, int teacherId,
+	public Class(int classId, String pName, String className, String dateFrom, String dateTo, int teacherId,
 			int adId, int mId, int tuId, int timeId) {
 		super();
 		this.classId = classId;
-		this.pId = pId;
 		this.pName = pName;
 		this.className = className;
 		this.dateFrom = dateFrom;
@@ -69,14 +65,6 @@ public class Class {
 
 	public void setClassId(int classId) {
 		this.classId = classId;
-	}
-
-	public int getpId() {
-		return pId;
-	}
-
-	public void setpId(int pId) {
-		this.pId = pId;
 	}
 
 	public String getpName() {

@@ -11,8 +11,6 @@ import vn.edu.fptu.PrimaryEducationManagementSystem.entities.Class;
 public interface ClassRepository
 		extends JpaRepository<vn.edu.fptu.PrimaryEducationManagementSystem.entities.Class, Integer> {
 
-	public List<Class> findBypId(int pId);
-
 	public List<Class> findByTeacherId(int teacherId);
 
 	public List<Class> findBymId(int mId);

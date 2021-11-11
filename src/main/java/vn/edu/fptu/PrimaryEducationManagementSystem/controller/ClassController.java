@@ -52,12 +52,6 @@ public class ClassController {
 		classRepo.delete(studentClass);
 		return ResponseEntity.ok("Delete class success !!!");
 	}
-
-	@GetMapping("/find/student")
-	public ResponseEntity<?> findTutionFeeByStudentId(@RequestParam int pId) {
-
-		return ResponseEntity.ok(classRepo.findBypId(pId));
-	}
 	
 	@GetMapping("/find/teacher")
 	public ResponseEntity<?> findTutionFeeByTeacherId(@RequestParam int teacherId) {
